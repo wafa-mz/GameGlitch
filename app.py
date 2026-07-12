@@ -33,9 +33,13 @@ low, high = get_range_for_difficulty(difficulty)
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
+# FIXME: Secret uses wrong range when switching difficulties
+# FIXED: Now uses low, high from difficulty
 if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high) 
 
+# FIXME: Attempts counter starts at wrong number
+# FIXED: Changed from 1 to 0
 if "attempts" not in st.session_state:
     st.session_state.attempts = 0 
 
@@ -50,6 +54,8 @@ if "history" not in st.session_state:
 
 st.subheader("Make a guess")
 
+# FIXME: Info box shows wrong range
+# FIXED: Uses {low} and {high} instead of hardcoded "1 and 100"
 st.info(
     f"Guess a number between {low} and {high}. "  
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
@@ -75,6 +81,8 @@ with col2:
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
+# FIXME: New Game uses wrong range
+# FIXED: Uses low, high instead of 1, 100
 if new_game:
     st.session_state.attempts = 0
     st.session_state.secret = random.randint(low, high)
